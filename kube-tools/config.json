@@ -1,3 +1,4 @@
 {
-    "alpine_version" : "3.19.1"
+    "alpine_version" : "3.19.1",
+    "helm_version": "2.2.2"
 }
