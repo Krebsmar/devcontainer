@@ -43,7 +43,6 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
-        args: --file=Dockerfile
         # The Snyk Action will output a SARIF file that can be uploaded to GitHub Code Scanning
         sarif: true
     - name: Upload result to GitHub Code Scanning
