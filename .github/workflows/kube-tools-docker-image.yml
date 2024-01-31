@@ -18,14 +18,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file kube-tools/dockerfile --tag kube-tools:v0.${{ github.run_number }}
-    - name: Login to GitHub Container Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - id: lower-repo
       shell: pwsh
       run: |
         "::set-output name=repository::$($env:GITHUB_REPOSITORY.ToLowerInvariant())"
+    - name: Build the Docker image
+      run: docker build . --file kube-tools/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/kube-tools:v0.${{ github.run_number }}
+    - name: Login to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Push the Docker image
       run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/kube-tools:v0.${{ github.run_number }}
     
