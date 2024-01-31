@@ -31,4 +31,9 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Push the Docker image
       run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
-    
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+        image: ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
