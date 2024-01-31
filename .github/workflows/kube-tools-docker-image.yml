@@ -16,6 +16,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      TYPE: kube-tools
+
     steps:
     - uses: actions/checkout@v3
     - id: lower-repo
@@ -23,9 +26,9 @@ jobs:
       run: |
         "::set-output name=repository::$($env:GITHUB_REPOSITORY.ToLowerInvariant())"
     - name: Build the Docker image
-      run: docker build . --file kube-tools/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/kube-tools:v0.${{ github.run_number }}
+      run: docker build . --file ${{env.TYPE}}/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Push the Docker image
-      run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/kube-tools:v0.${{ github.run_number }}
+      run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
     
