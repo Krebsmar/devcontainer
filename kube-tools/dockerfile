@@ -1,29 +1,26 @@
 # Start from the latest Alpine image
-FROM alpine:latest
+FROM alpine:3.19.1
 
 # Update the system
 RUN apk update && apk upgrade
 
 # Install curl and other dependencies
-RUN apk add --no-cache curl tar unzip
+RUN apk add --no-cache curl tar
 
 # Install kubectl
 RUN apk add --no-cache kubectl
 
-# Install helm
-RUN apk add --no-cache helm    
+# Install Helm
+RUN apk add --no-cache helm   
 
 # Install k9s
 RUN apk add --no-cache k9s
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the current directory contents into the container at /app
-COPY . /app
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Install Flux CLI
+RUN curl -o /tmp/flux.tar.gz -sLO https://github.com/fluxcd/flux2/releases/download/v2.2.2/flux_2.2.2_linux_amd64.tar.gz \
+    && tar -C /tmp/ -zxvf /tmp/flux.tar.gz \
+    && mv /tmp/flux /usr/local/bin/flux \
+    && chmod +x /usr/local/bin/flux
 
 # Run the command when the container launches
 CMD ["sh"]
