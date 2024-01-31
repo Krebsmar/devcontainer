@@ -1,0 +1,34 @@
+name: Ansible Docker Image CI
+
+on:
+  push:
+    paths:
+      - 'ansible/**'
+    branches: [ "main" ]
+  pull_request:
+    paths:
+      - 'ansible/**'
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      TYPE: ansible
+
+    steps:
+    - uses: actions/checkout@v3
+    - id: lower-repo
+      shell: pwsh
+      run: |
+        "::set-output name=repository::$($env:GITHUB_REPOSITORY.ToLowerInvariant())"
+    - name: Build the Docker image
+      run: docker build . --file ${{env.TYPE}}/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
+    - name: Login to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+    - name: Push the Docker image
+      run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
+    

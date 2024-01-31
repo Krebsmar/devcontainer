@@ -1,4 +1,8 @@
 ```
+docker pull ghcr.io/krebsmar/devcontainer/terraform:{{image_tag}}
+```
+or build on your own
+```
 docker build . -t terraform
 ```
 ```
