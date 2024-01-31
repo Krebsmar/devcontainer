@@ -1,8 +1,5 @@
-# Use an argument for the Alpine version
-ARG ALPINE_VERSION
-
 # Start from the specified Alpine image
-FROM alpine:${ALPINE_VERSION}
+FROM alpine:3.19.1
 
 # Update the system
 RUN apk update && apk upgrade
