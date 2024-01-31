@@ -33,7 +33,7 @@ jobs:
         template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: 'trivy-results.sarif' 
     - name: Login to GitHub Container Registry
