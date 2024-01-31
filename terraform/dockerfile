@@ -1,7 +1,7 @@
 # Start from the latest Alpine image
 FROM alpine:3.19.1
 
-ENV TERRAFORM_VERSION 1.6.6
+ENV TERRAFORM_VERSION 1.7.1
 
 # Update the system
 RUN apk update && apk upgrade
