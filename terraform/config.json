@@ -1,0 +1,4 @@
+{
+    "alpine_version": "3.19.1",
+    "terraform_version": "1.7.1"
+}
