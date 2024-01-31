@@ -26,11 +26,13 @@ jobs:
       run: |
         "::set-output name=repository::$($env:GITHUB_REPOSITORY.ToLowerInvariant())"
     - name: Build the Docker image
-      run: docker build . --file ${{env.TYPE}}/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
+      run: docker build . --file ${{env.TYPE}}/dockerfile --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }} --tag ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:latest
     - name: Login to GitHub Container Registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Push the Docker image
       run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
+    - name: Push the Docker image
+      run: docker push ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:latest
     - name: Run Snyk to check Docker image for vulnerabilities
       # Snyk can be used to break the build when it detects vulnerabilities.
       # In this case we want to upload the issues to GitHub Code Scanning
