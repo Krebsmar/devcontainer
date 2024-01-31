@@ -44,6 +44,8 @@ jobs:
       with:
         image: ghcr.io/${{ steps.lower-repo.outputs.repository }}/${{env.TYPE}}:v0.${{ github.run_number }}
         args: --file=Dockerfile
+        # The Snyk Action will output a SARIF file that can be uploaded to GitHub Code Scanning
+        sarif: true
     - name: Upload result to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v2
       with:
