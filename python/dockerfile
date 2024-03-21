@@ -1,0 +1,11 @@
+# Start from the specified Alpine image
+FROM alpine:3.19.1
+
+# Update the system
+RUN apk update && apk upgrade
+
+# Install curl and other dependencies
+RUN apk add --no-cache python3 py3-pip
+
+# Run the command when the container launches
+CMD ["sh"]
