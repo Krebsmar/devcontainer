@@ -1,0 +1,14 @@
+# Start from the specified Alpine image
+FROM alpine:3.19.1
+
+# Update the system
+RUN apk update && apk upgrade
+
+# Install curl and other dependencies
+RUN apk add --no-cache curl
+
+# Install Dagger
+RUN curl -L https://dl.dagger.io/dagger/install.sh | BIN_DIR=/bin sh
+
+# Run the command when the container launches
+CMD ["sh"]
