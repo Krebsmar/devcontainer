@@ -17,7 +17,7 @@ RUN apk add --no-cache helm
 RUN apk add --no-cache k9s
 
 # Install Flux CLI
-RUN curl -o /tmp/flux.tar.gz -sLO https://github.com/fluxcd/flux2/releases/download/v2.2.2/flux_2.2.2_linux_amd64.tar.gz \
+RUN curl -o /tmp/flux.tar.gz -sLO https://github.com/fluxcd/flux2/releases/download/v2.2.2/flux_2.3.0_linux_amd64.tar.gz \
     && tar -C /tmp/ -zxvf /tmp/flux.tar.gz \
     && mv /tmp/flux /usr/local/bin/flux \
     && chmod +x /usr/local/bin/flux
