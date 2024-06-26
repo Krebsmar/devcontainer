@@ -1,5 +1,5 @@
 # Start from the specified Alpine image
-FROM alpine:3.19.1
+FROM alpine:3.20.1
 
 # Update the system
 RUN apk update && apk upgrade
